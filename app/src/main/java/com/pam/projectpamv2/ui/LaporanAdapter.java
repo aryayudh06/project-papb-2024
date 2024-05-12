@@ -53,6 +53,16 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanV
         holder.bind(laporan.get(position), position);
     }
 
+    public void filter(String query) {
+        List<Pegawai> filteredList = new ArrayList<>();
+        for (Pegawai pegawai : laporan) {
+            if (pegawai.nama.toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(pegawai);
+            }
+        }
+        setListPegawai(filteredList);
+    }
+
     @Override
     public int getItemCount() {
         return this.laporan.size();
