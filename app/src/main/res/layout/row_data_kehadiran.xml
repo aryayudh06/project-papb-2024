@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/tvNamaAbsensi"
+        android:layout_width="164dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        android:text="Steven"
+        app:layout_constraintEnd_toStartOf="@+id/btShow"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toEndOf="@+id/ivFoto"
+        app:layout_constraintTop_toTopOf="@+id/ivFoto" />
+
+    <TextView
+        android:id="@+id/tvTanggalAbsensi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="01/01/2001"
+        app:layout_constraintStart_toStartOf="@+id/tvNamaAbsensi"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaAbsensi" />
+
+    <TextView
+        android:id="@+id/tvJamAbsensi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="07.30 WIB"
+        app:layout_constraintStart_toStartOf="@+id/tvTanggalAbsensi"
+        app:layout_constraintTop_toBottomOf="@+id/tvTanggalAbsensi" />
+
+    <TextView
+        android:id="@+id/tvLokasiAbsensi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Jl. Watu Gong No. 1"
+        app:layout_constraintStart_toStartOf="@+id/tvJamAbsensi"
+        app:layout_constraintTop_toBottomOf="@+id/tvJamAbsensi" />
+
+    <ImageView
+        android:id="@+id/ivFoto"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:text="Show"
+        android:textColor="#2196F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#000000"
+        app:strokeWidth="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
