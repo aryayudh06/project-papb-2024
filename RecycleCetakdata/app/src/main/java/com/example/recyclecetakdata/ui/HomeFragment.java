@@ -28,21 +28,19 @@ public class HomeFragment extends Fragment {
     private  ListDataAdapter listDataAdapter;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {// pada fragment, UI logic biasanya diletakkan di fungsi OnViewCreated
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // semua fungsi dibawah dipindahkan dari MainActivity dengan sedikit adjustment
-        MainViewModel mainViewModel = obtainViewModel(); // membuat variable viewModel
-        mainViewModel.insert(data2.getListData()); // insert semua data, comment baris ini ketika sudah dijalankan sekali karena data sudah tersimpan ke database. Selanjutnya hanya perlu read data.
+        MainViewModel mainViewModel = obtainViewModel(); 
+        mainViewModel.insert(data2.getListData()); 
 
         RecyclerView rvdata = view.findViewById(R.id.rv_data);
         rvdata.setHasFixedSize(true);
-        rvdata.setLayoutManager(new LinearLayoutManager(requireContext())); // untuk menjalankan fungsi ini, dibutuhkan konteks yang valid sehingga requiredContext() digunakan
+        rvdata.setLayoutManager(new LinearLayoutManager(requireContext())); 
         listDataAdapter = new ListDataAdapter(list);
-        rvdata.setAdapter(listDataAdapter); // set adapter recyclerview
+        rvdata.setAdapter(listDataAdapter); 
 
-        // sebelumnya kode dibawah berjalan di dalam activity dimana fungsi observe membutuhkan argumen lifecycle owner
-        // oleh karena itu yang sebelumnya input argumen "this" (yang merujuk pada MainActivity) diubah menjadi requireActivity() (karena skrng kode ini bukan di MainActivity lagi melainkan fragment)
-        mainViewModel.getAllUsers().observe(requireActivity(), new Observer<List<User>>() { // mengambil semua data dari database
+        
+        mainViewModel.getAllUsers().observe(requireActivity(), new Observer<List<User>>() { 
             @Override
             public void onChanged(List<User> user) {
                 showData(user);
@@ -50,21 +48,21 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    //fungsi OnCreateView ini dipanggil saat fragment pertama kali dibuat atau saat tampilannya perlu di-generate untuk ditampilkan ke pengguna.
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    // fungsi ini dipindahkan dari MainActivity
-    private void  showData(List<User> list){ // menampilkan data
-        listDataAdapter.listdata.addAll(list); // add data ke variable list yang ada di adapter
-        listDataAdapter.notifyDataSetChanged(); // refresh adapter untuk menampilkan data baru
+    
+    private void  showData(List<User> list){ 
+        listDataAdapter.listdata.addAll(list);
+        listDataAdapter.notifyDataSetChanged(); 
     }
 
-    // fungsi ini dipindahkan dari MainActivity
-    private MainViewModel obtainViewModel() { // fungsi untuk membuat instance viewModel
+    
+    private MainViewModel obtainViewModel() {
         return new ViewModelProvider(requireActivity()).get(MainViewModel.class);
     }
 }
