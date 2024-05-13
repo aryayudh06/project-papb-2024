@@ -7,11 +7,11 @@ import com.example.recyclecetakdata.model.User;
 import java.util.List;
 
 @androidx.room.Dao
-public interface Dao { //membuat interface DAO
+public interface Dao { 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(List<User> data); // fungsi untuk insert data Array ke Room
+    void insert(List<User> data); 
 
     @Query("SELECT * from User ORDER BY name ASC")
-    LiveData<List<User>> getAllData(); // fungsi untuk mengambil semua data dalam List
+    LiveData<List<User>> getAllData(); 
 }
