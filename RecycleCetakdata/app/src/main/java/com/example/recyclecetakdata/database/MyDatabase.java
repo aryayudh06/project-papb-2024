@@ -7,24 +7,24 @@ import androidx.room.RoomDatabase;
 
 import com.example.recyclecetakdata.model.User;
 
-@Database(entities = {User.class}, version = 2, exportSchema = false) // annotation database dengan entyty User
-public abstract class MyDatabase extends RoomDatabase { // abstrak class database room
+@Database(entities = {User.class}, version = 2, exportSchema = false) 
+public abstract class MyDatabase extends RoomDatabase { 
 
-    public abstract Dao userDao(); // variabel dao
+    public abstract Dao userDao(); 
 
-    private static volatile MyDatabase INSTANCE; // variabel instance database
+    private static volatile MyDatabase INSTANCE; 
 
-    public static MyDatabase getDatabase(final Context context) { // fungsi untuk mendapatkan instance database
-        if (INSTANCE == null) { // jika instance belum ada
+    public static MyDatabase getDatabase(final Context context) { 
+        if (INSTANCE == null) { 
             synchronized (MyDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), // maka buat instance database
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), 
                                     MyDatabase.class, "my_database")
                             .fallbackToDestructiveMigration()
                             .build();
                 }
             }
         }
-        return INSTANCE; // mengembalikan data instance database
+        return INSTANCE; 
     }
 }
