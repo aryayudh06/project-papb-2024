@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
     @PrimaryKey
-    private Integer uid; // perlu variable yang unique untuk jadi primary key
+    private Integer uid; 
     private String name;
     private String detail;
     private Integer photo;
