@@ -15,6 +15,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.pam.projectpamv2.R;
 import com.pam.projectpamv2.components.DateComponent;
 import com.pam.projectpamv2.components.ViewModelFactory;
@@ -31,6 +39,8 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     private FrameLayout flSearch;
     ActivityKelolaGajiBinding binding;
     private GajiAdapter gajiAdapter;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     List<Pegawai> pegawais;
     PegawaiInsertUpdateViewModel pegawaiInsertUpdateViewModel;
     PegawaiMainViewModel itemMainViewModel;
@@ -40,76 +50,127 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
+        Pegawai a = new Pegawai();
+        a.setNama("Doni");
+        a.setGaji("10000000");
+        a.setStatusGaji(false);
+        a.setNoKtp("1234567889");
+//        pegawaiInsertUpdateViewModel.insert(a);
+
+        myRef.child("pegawai").setValue(a);
+
         flSearch = findViewById(R.id.flSearch);
         Fragment search = new SearchBar();
 
         binding = ActivityKelolaGajiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        gajiAdapter = new GajiAdapter(this, this);
 
-        itemMainViewModel = obtainViewModel(KelolaGaji.this);
-        pegawaiInsertUpdateViewModel = obtainViewModelCRUD(KelolaGaji.this);
+        readDataFromDatabase();
+        setUpRecyclerView();
 
-        itemMainViewModel.getAllPegawai().observe(this, item -> {
-            if (item != null) {
-                Log.d("test", item.get(1).nama);
-                gajiAdapter.setListPegawai(item);
-                pegawais = item;
-            }
-        });
+//        gajiAdapter = new GajiAdapter(this, this);
+//
+//        itemMainViewModel = obtainViewModel(KelolaGaji.this);
+//        pegawaiInsertUpdateViewModel = obtainViewModelCRUD(KelolaGaji.this);
+
+//        itemMainViewModel.getAllPegawai().observe(this, item -> {
+//            if (item != null) {
+//                Log.d("test", item.get(1).nama);
+//                gajiAdapter.setListPegawai(item);
+//                pegawais = item;
+//            }
+//        });
 
         getSupportFragmentManager().beginTransaction().
                 add(R.id.flSearch, search).
                 commit();
 
 
-
-//        Pegawai a = new Pegawai();
-//        a.setNama("Doni");
-//        a.setGaji("10000000");
-//        a.setStatusGaji(false);
-//        a.setNoKtp("1234567889");
-//        pegawaiInsertUpdateViewModel.insert(a);
-
-
         binding.rvItemPeg.setLayoutManager(new LinearLayoutManager(this));
-//        binding.rvItemPeg.setHasFixedSize(true);
         binding.rvItemPeg.setAdapter(gajiAdapter);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        readDataFromDatabase();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
     }
-    @NonNull
-    private static PegawaiMainViewModel
-    obtainViewModel(AppCompatActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return new ViewModelProvider(activity, factory).get(PegawaiMainViewModel.class);
-    }
-    @NonNull
-    private static PegawaiInsertUpdateViewModel
-    obtainViewModelCRUD(AppCompatActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return new ViewModelProvider(activity, factory).get(PegawaiInsertUpdateViewModel.class);
-    }
+//    @NonNull
+//    private static PegawaiMainViewModel
+//    obtainViewModel(AppCompatActivity activity) {
+//        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+//
+//        return new ViewModelProvider(activity, factory).get(PegawaiMainViewModel.class);
+//    }
+//    @NonNull
+//    private static PegawaiInsertUpdateViewModel
+//    obtainViewModelCRUD(AppCompatActivity activity) {
+//        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+//        return new ViewModelProvider(activity, factory).get(PegawaiInsertUpdateViewModel.class);
+//    }
 
     @Override
     public void onItemClicked(Pegawai pegawai, String input, int status) {
         String x = input;
         Intent i = new Intent(this, Homepage.class);
+        boolean mStatusGaji = false;
+        if (status==1){
+            mStatusGaji = true;
+        }
 
-        pegawai.setStatusGaji(true);
-        pegawai.setGaji(input);
-        pegawai.setDate(DateComponent.getCurrentDate());
+        updateData(pegawai, input, mStatusGaji, DateComponent.getCurrentDate());
         pegawaiInsertUpdateViewModel.update(pegawai);
         i.putExtra("gaji", x);
 
         Toast.makeText(this, "Memproses "+ pegawai.nama, Toast.LENGTH_SHORT).show();
         startActivity(i);
     }
+
+    public void updateData(Pegawai pegawaiOld, String input, boolean status, String date){
+        DatabaseReference notesRef = myRef.child("notes");
+        Query updateQuery = notesRef.orderByChild("title").equalTo(pegawaiOld.getNama());
+
+        updateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // Gunakan setValue untuk memperbarui catatan dengan data yang baru
+                    snapshot.getRef().child("gaji").setValue(input);
+                    snapshot.getRef().child("date").setValue(date);
+                    snapshot.getRef().child("status").setValue(status)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(KelolaGaji.this, "Note updated successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(KelolaGaji.this, "Failed to update note", Toast.LENGTH_SHORT).show();
+                                }
+
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(KelolaGaji.this, "Failed to read data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void getQuery(String query) {
@@ -118,6 +179,33 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         gajiAdapter.notifyDataSetChanged();
     }
 
+    public void readDataFromDatabase() {
+        DatabaseReference pegawaiRef = myRef.child("pegawai");
+        pegawaiRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot noteSnapshot : dataSnapshot.getChildren()) {
+                    Pegawai pegawai = noteSnapshot.getValue(Pegawai.class);
+                    pegawais.add(pegawai);
+                    Log.d("mNotes", pegawai.toString());
+                }
+                // Set up RecyclerView adapter here after data is fully loaded
+                setUpRecyclerView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(KelolaGaji.this, "Failed to read data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setUpRecyclerView() {
+        GajiAdapter adapter = new GajiAdapter(this, pegawais, this);
+        rvItemPeg = findViewById(R.id.rvItemPeg);
+        rvItemPeg.setLayoutManager(new LinearLayoutManager(this));
+        rvItemPeg.setAdapter(adapter);
+    }
 
 }
 

@@ -49,6 +49,12 @@ public class Pegawai {
         this.nama = nama;
     }
 
+
+
+    public String getNama() {
+        return nama;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -59,6 +65,10 @@ public class Pegawai {
 
     public void setGaji(String gaji) {
         this.gaji = gaji;
+    }
+
+    public String getGaji() {
+        return gaji;
     }
 
     public void setNoKtp(String noKtp) {

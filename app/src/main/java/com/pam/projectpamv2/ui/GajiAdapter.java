@@ -33,8 +33,9 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
     List<Pegawai> gajian = new ArrayList<>();
     ProsesListener listener;
 
-    public GajiAdapter(Context context, ProsesListener listener) {
+    public GajiAdapter(Context context, List<Pegawai> gajian, ProsesListener listener) {
         this.context = context;
+        this.gajian = gajian;
         this.listener = listener;
     }
     void setListPegawai(List<Pegawai> listPegawai) {
