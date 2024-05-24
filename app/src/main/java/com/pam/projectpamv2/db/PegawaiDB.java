@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Pegawai.class}, version  = 1)
+@Database(entities = {Pegawai.class}, version  = 1, exportSchema = false)
 public abstract class PegawaiDB extends RoomDatabase {
 
     public abstract PegawaiDAO pegawaiDAO();
