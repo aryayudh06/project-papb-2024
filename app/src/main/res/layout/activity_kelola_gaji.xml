@@ -42,16 +42,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.063" />
 
-    <SearchView
-        android:id="@+id/svLap"
-        android:layout_width="273dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ibBack"
-        app:layout_constraintTop_toBottomOf="@+id/tvSimpeg2"
-        app:layout_constraintVertical_bias="0.045" />
-
     <TableLayout
         android:id="@+id/tlDataPeg"
         android:layout_width="408dp"
@@ -61,8 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svLap"
-        app:layout_constraintVertical_bias="0.183">
+        app:layout_constraintTop_toBottomOf="@+id/flSearch">
 
         <TableRow
             android:layout_width="match_parent"
@@ -121,15 +110,15 @@
         </androidx.recyclerview.widget.RecyclerView>
     </TableLayout>
 
-    <ImageButton
-        android:id="@+id/ibBack"
-        android:layout_width="49dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+    <FrameLayout
+        android:id="@+id/flSearch"
+        android:layout_width="408dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="140dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSimpeg2"
-        android:background="@drawable/btn_back"
-        app:srcCompat="@drawable/ic_arrow_back" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

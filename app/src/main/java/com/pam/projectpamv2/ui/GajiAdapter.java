@@ -72,6 +72,16 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
             }
         });
     }
+    public void filter(String query) {
+        List<Pegawai> filteredList = new ArrayList<>();
+        for (Pegawai pegawai : gajian) {
+            if (pegawai.nama.toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(pegawai);
+            }
+        }
+        setListPegawai(filteredList);
+    }
+
 
 
     @Override
