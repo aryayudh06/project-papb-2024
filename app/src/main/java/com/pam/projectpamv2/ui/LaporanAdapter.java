@@ -13,7 +13,7 @@ import com.pam.projectpamv2.components.PegawaiDiffCallback;
 import com.pam.projectpamv2.databinding.RowKelolaGajiBinding;
 import com.pam.projectpamv2.databinding.RowLaporanBulananBinding;
 import com.pam.projectpamv2.db.Pegawai;
-import com.pam.projectpamv2.repository.PegawaiRepository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanV
 
     public static class LaporanViewHolder extends RecyclerView.ViewHolder {
         final RowLaporanBulananBinding binding;
-        PegawaiRepository mRepository;
+
 
         public LaporanViewHolder(RowLaporanBulananBinding binding) {
             super(binding.getRoot());
