@@ -11,16 +11,14 @@ import android.widget.Button;
 
 import com.pam.projectpamv2.R;
 import com.pam.projectpamv2.components.DateComponent;
-import com.pam.projectpamv2.components.ViewModelFactory;
 import com.pam.projectpamv2.db.Pegawai;
-import com.pam.projectpamv2.db.PegawaiDAO;
-import com.pam.projectpamv2.repository.PegawaiRepository;
+
 
 public class Homepage extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnDataPegawai;
     private Button btnLapBulanan;
-    private PegawaiInsertUpdateViewModel pegawaiInsertUpdateViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +32,6 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
 
         this.btnDataPegawai.setOnClickListener(this);
 
-
-        PegawaiRepository p = new PegawaiRepository(this.getApplication());
 //
         Pegawai a = new Pegawai("Adel", "7000000", false, 23, "12323233", DateComponent.getCurrentDate());
 //        p.insert(a);
@@ -53,10 +49,4 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    @NonNull
-    private static PegawaiInsertUpdateViewModel
-    obtainViewModel(AppCompatActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return new ViewModelProvider(activity, factory).get(PegawaiInsertUpdateViewModel.class);
-    }
 }

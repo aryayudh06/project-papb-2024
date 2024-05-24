@@ -25,7 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pam.projectpamv2.R;
 import com.pam.projectpamv2.components.DateComponent;
-import com.pam.projectpamv2.components.ViewModelFactory;
+
 import com.pam.projectpamv2.databinding.ActivityKelolaGajiBinding;
 import com.pam.projectpamv2.db.Pegawai;
 
@@ -42,8 +42,6 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     FirebaseDatabase database;
     DatabaseReference myRef;
     List<Pegawai> pegawais;
-    PegawaiInsertUpdateViewModel pegawaiInsertUpdateViewModel;
-    PegawaiMainViewModel itemMainViewModel;
 
 
     @Override
@@ -129,7 +127,7 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         }
 
         updateData(pegawai, input, mStatusGaji, DateComponent.getCurrentDate());
-        pegawaiInsertUpdateViewModel.update(pegawai);
+
         i.putExtra("gaji", x);
 
         Toast.makeText(this, "Memproses "+ pegawai.nama, Toast.LENGTH_SHORT).show();
