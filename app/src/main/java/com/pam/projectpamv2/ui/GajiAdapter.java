@@ -19,10 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pam.projectpamv2.components.PegawaiDiffCallback;
 import com.pam.projectpamv2.R;
-import com.pam.projectpamv2.components.ViewModelFactory;
 import com.pam.projectpamv2.databinding.RowKelolaGajiBinding;
 import com.pam.projectpamv2.db.Pegawai;
-import com.pam.projectpamv2.repository.PegawaiRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +90,6 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
 
     public static class GajiViewHolder extends RecyclerView.ViewHolder {
         final RowKelolaGajiBinding binding;
-        PegawaiRepository mRepository;
 
         public GajiViewHolder(ProsesListener listener, RowKelolaGajiBinding binding) {
             super(binding.getRoot());

@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pam.projectpamv2.R;
-import com.pam.projectpamv2.components.ViewModelFactory;
 import com.pam.projectpamv2.databinding.ActivityLaporanBulananBinding;
 import com.pam.projectpamv2.db.Pegawai;
 
@@ -36,7 +35,7 @@ public class LaporanBulanan extends AppCompatActivity implements View.OnClickLis
     private boolean isEdit = false;
     private Pegawai pegawai;
     private ActivityLaporanBulananBinding binding;
-    private PegawaiMainViewModel pegawaiMainViewModel;
+
     LaporanAdapter adapter;
 
     @Override
@@ -45,20 +44,20 @@ public class LaporanBulanan extends AppCompatActivity implements View.OnClickLis
         binding = ActivityLaporanBulananBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        pegawaiMainViewModel = obtainViewModel(LaporanBulanan.this);
+
         pegawai = getIntent().getParcelableExtra(EXTRA_ITEM);
-        PegawaiMainViewModel pegawaiList = obtainViewModel(this);
+
 
 
         adapter = new LaporanAdapter();
-
-        pegawaiList.getAllPegawai().observe(this, item -> {
-            if (item != null) {
-                Log.d("proses", item.get(1).nama);
-                adapter.setListPegawai(item);
-                pegawais = item;
-            }
-        });
+//
+//        pegawaiList.getAllPegawai().observe(this, item -> {
+//            if (item != null) {
+//                Log.d("proses", item.get(1).nama);
+//                adapter.setListPegawai(item);
+//                pegawais = item;
+//            }
+//        });
 
         binding.rvLaporanBulanan.setLayoutManager(new LinearLayoutManager(this));
         binding.rvLaporanBulanan.setAdapter(adapter);
@@ -91,13 +90,6 @@ public class LaporanBulanan extends AppCompatActivity implements View.OnClickLis
         startActivity(i);
         finish();
         return true;
-    }
-
-    @NonNull
-    private static PegawaiMainViewModel
-    obtainViewModel(AppCompatActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return new ViewModelProvider(activity, factory).get(PegawaiMainViewModel.class);
     }
 
     @Override
