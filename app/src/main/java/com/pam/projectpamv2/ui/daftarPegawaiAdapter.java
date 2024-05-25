@@ -1,6 +1,7 @@
 package com.pam.projectpamv2.ui;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,50 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pam.projectpamv2.R;
+import com.pam.projectpamv2.db.Pegawai;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdapter.PegawaiViewHolder> {
 
-    private List<PegawaiEntity> pegawaiList;
+    private List<Pegawai> pegawaiList;
     private Context context;
+    private DatabaseReference dbRef;
 
-    public daftarPegawaiAdapter() {
-//        this.context = context;
+    public daftarPegawaiAdapter(Context context) {
+        this.context = context;
         this.pegawaiList = new ArrayList<>();
+        this.dbRef = FirebaseDatabase.getInstance().getReference("pegawai");
+        fetchPegawaiData();
     }
 
-    public void setPegawai(List<PegawaiEntity> pegawaiList) {
+    private void fetchPegawaiData() {
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Pegawai> newList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Pegawai pegawai = dataSnapshot.getValue(Pegawai.class);
+                    newList.add(pegawai);
+                }
+                setPegawai(newList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Database Error", error.toException());
+            }
+        });
+    }
+
+    public void setPegawai(List<Pegawai> pegawaiList) {
         this.pegawaiList = pegawaiList;
         notifyDataSetChanged();
     }
@@ -36,7 +67,7 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
 
     @Override
     public void onBindViewHolder(@NonNull PegawaiViewHolder holder, int position) {
-        PegawaiEntity pegawai = pegawaiList.get(position);
+        Pegawai pegawai = pegawaiList.get(position);
         holder.textViewNama.setText(pegawai.getNama());
         holder.textViewJK.setText(pegawai.getJenisKelamin());
         holder.textViewJabatan.setText(pegawai.getJabatan());
@@ -60,7 +91,7 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
             textViewKTP = itemView.findViewById(R.id.textViewKTP);
         }
 
-        public void bind(PegawaiEntity pegawai) {
+        public void bind(Pegawai pegawai) {
             textViewNama.setText(pegawai.getNama());
             textViewJK.setText(pegawai.getJenisKelamin());
             textViewJabatan.setText(pegawai.getJabatan());
@@ -68,7 +99,3 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
         }
     }
 }
-
-
-
-

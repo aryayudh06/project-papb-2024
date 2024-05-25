@@ -32,19 +32,44 @@ public class Pegawai {
     @ColumnInfo(name = "date")
     private String date = "";
 
+
+    @ColumnInfo(name = "jabatan")
+    public String jabatan = "";
+
+
+    @ColumnInfo(name = "jenisKelamin")
+    public String jenisKelamin = "";
+
     @Ignore
     public Pegawai(){
 
     }
-    public Pegawai(String nama, String gaji, boolean statusGaji, int usia, String noKtp, String date) {
+    public Pegawai(String nama, String gaji, boolean statusGaji, int usia, String noKtp, String date, String jabatan, String jenisKelamin) {
         this.nama = nama;
         this.gaji = gaji;
         this.statusGaji = statusGaji;
         this.noKtp = noKtp;
         this.date = date;
         this.usia = usia;
+        this.jabatan = jabatan;
+        this.jenisKelamin = jenisKelamin;
     }
 
+    public String getJenisKelamin() {
+        return jenisKelamin;
+    }
+
+    public void setJenisKelamin(String jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
+    }
+
+    public String getJabatan() {
+        return jabatan;
+    }
+
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
+    }
     public void setNama(String nama) {
         this.nama = nama;
     }
@@ -73,6 +98,10 @@ public class Pegawai {
 
     public void setNoKtp(String noKtp) {
         this.noKtp = noKtp;
+    }
+
+    public String getNoKtp() {
+        return jabatan;
     }
 
     public void setStatusGaji(boolean statusGaji) {
