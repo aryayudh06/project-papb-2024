@@ -103,7 +103,7 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
 //    }
 
     @Override
-    public void onItemClicked(Pegawai pegawai, String input, int status, int position) {
+    public void onItemClicked(Pegawai pegawai, String input, int status ) {
         String x = input;
 //        Intent i = new Intent(this, KelolaGaji.class);
         boolean mStatusGaji = false;
@@ -112,11 +112,14 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         }
 
       updateData(pegawai, input, mStatusGaji, DateComponent.getCurrentDate());
-//        gajiAdapter.notifyItemChanged(position);
-
 
 //        Toast.makeText(this, "Memproses "+ pegawai.nama, Toast.LENGTH_SHORT).show();
 //        startActivity(i);
+    }
+
+    @Override
+    public void onTotalChanged(int total) {
+
     }
 
     public void updateData(Pegawai pegawaiOld, String input, boolean status, String date){

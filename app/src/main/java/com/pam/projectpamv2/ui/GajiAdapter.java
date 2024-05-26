@@ -66,7 +66,7 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
             @Override
             public void onClick(View v) {
                 if (!holder.binding.etInput.getText().toString().equals("")) {
-                    listener.onItemClicked(gajian.get(holder.getBindingAdapterPosition()), holder.binding.etInput.getText().toString(), 1, holder.getBindingAdapterPosition());
+                    listener.onItemClicked(gajian.get(holder.getBindingAdapterPosition()), holder.binding.etInput.getText().toString(), 1);
                 }
             }
         });
