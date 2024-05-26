@@ -4,5 +4,5 @@ import com.pam.projectpamv2.db.Pegawai;
 
 public interface ProsesListener {
     void onItemClicked(Pegawai model, String input, int status);
-
+    void onTotalChanged(int total);
 }

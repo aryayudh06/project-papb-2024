@@ -33,7 +33,7 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
         this.btnDataPegawai.setOnClickListener(this);
 
 //
-        Pegawai a = new Pegawai("Adel", "7000000", false, 23, "12323233", DateComponent.getCurrentDate());
+//        Pegawai a = new Pegawai("Adel", "7000000", false, 23, "12323233", DateComponent.getCurrentDate());
 //        p.insert(a);
 
     }
