@@ -68,35 +68,19 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         setContentView(binding.getRoot());
 
         readDataFromDatabase();
-        setUpRecyclerView();
-
-//        gajiAdapter = new GajiAdapter(this, this);
-//
-//        itemMainViewModel = obtainViewModel(KelolaGaji.this);
-//        pegawaiInsertUpdateViewModel = obtainViewModelCRUD(KelolaGaji.this);
-
-//        itemMainViewModel.getAllPegawai().observe(this, item -> {
-//            if (item != null) {
-//                Log.d("test", item.get(1).nama);
-//                gajiAdapter.setListPegawai(item);
-//                pegawais = item;
-//            }
-//        });
+//        setUpRecyclerView();
 
         getSupportFragmentManager().beginTransaction().
                 add(R.id.flSearch, search).
                 commit();
 
 
-        binding.rvItemPeg.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvItemPeg.setAdapter(gajiAdapter);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        readDataFromDatabase();
+//        readDataFromDatabase();
     }
 
     @Override
@@ -119,25 +103,25 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
 //    }
 
     @Override
-    public void onItemClicked(Pegawai pegawai, String input, int status) {
+    public void onItemClicked(Pegawai pegawai, String input, int status, int position) {
         String x = input;
-        Intent i = new Intent(this, Homepage.class);
+//        Intent i = new Intent(this, KelolaGaji.class);
         boolean mStatusGaji = false;
         if (status==1){
             mStatusGaji = true;
         }
 
-        updateData(pegawai, input, mStatusGaji, DateComponent.getCurrentDate());
+      updateData(pegawai, input, mStatusGaji, DateComponent.getCurrentDate());
+//        gajiAdapter.notifyItemChanged(position);
 
-        i.putExtra("gaji", x);
 
-        Toast.makeText(this, "Memproses "+ pegawai.nama, Toast.LENGTH_SHORT).show();
-        startActivity(i);
+//        Toast.makeText(this, "Memproses "+ pegawai.nama, Toast.LENGTH_SHORT).show();
+//        startActivity(i);
     }
 
     public void updateData(Pegawai pegawaiOld, String input, boolean status, String date){
         DatabaseReference notesRef = myRef;
-        Query updateQuery = notesRef.orderByChild("title").equalTo(pegawaiOld.getNama());
+        Query updateQuery = notesRef.orderByChild("nama").equalTo(pegawaiOld.getNama());
 
         updateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -146,17 +130,18 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
                     // Gunakan setValue untuk memperbarui catatan dengan data yang baru
                     snapshot.getRef().child("gaji").setValue(input);
                     snapshot.getRef().child("date").setValue(date);
-                    snapshot.getRef().child("status").setValue(status)
+                    snapshot.getRef().child("statusGaji").setValue(status)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(KelolaGaji.this, "Note updated successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(KelolaGaji.this, "Gaji updated successfully", Toast.LENGTH_SHORT).show();
+                                    readDataFromDatabase();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(KelolaGaji.this, "Failed to update note", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(KelolaGaji.this, "Failed to update Gaji", Toast.LENGTH_SHORT).show();
                                 }
 
                             });
@@ -179,18 +164,27 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     }
 
     public void readDataFromDatabase() {
-        DatabaseReference pegawaiRef = myRef;
+        DatabaseReference pegawaiRef = myRef;  // pastikan membaca dari node "pegawai"
         pegawaiRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pegawais.clear();
+                pegawais.clear(); // Clear the list before adding new data
                 for (DataSnapshot noteSnapshot : dataSnapshot.getChildren()) {
                     Pegawai pegawai = noteSnapshot.getValue(Pegawai.class);
-                    pegawais.add(pegawai);
-                    Log.d("mNotes", pegawais.toString());
+                    if (pegawai != null) {
+                        pegawais.add(pegawai);
+                        Log.d("mNotes", pegawai.toString());
+                    } else {
+                        Log.w("mNotes", "Pegawai data is null");
+                    }
                 }
                 // Set up RecyclerView adapter here after data is fully loaded
-                setUpRecyclerView();
+                if (gajiAdapter == null) {
+                    setUpRecyclerView();
+                } else {
+                    gajiAdapter.setListPegawai(pegawais);
+                    gajiAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -201,10 +195,10 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     }
 
     private void setUpRecyclerView() {
-        GajiAdapter adapter = new GajiAdapter(this, pegawais, this);
+        this.gajiAdapter = new GajiAdapter(this, pegawais, this);
         rvItemPeg = findViewById(R.id.rvItemPeg);
         rvItemPeg.setLayoutManager(new LinearLayoutManager(this));
-        rvItemPeg.setAdapter(adapter);
+        rvItemPeg.setAdapter(gajiAdapter);
     }
 
 }
