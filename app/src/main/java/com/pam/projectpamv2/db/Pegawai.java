@@ -41,9 +41,8 @@ public class Pegawai {
     public String jenisKelamin = "";
 
     @Ignore
-    public Pegawai(){
+    public Pegawai(){}
 
-    }
     public Pegawai(String nama, String gaji, boolean statusGaji, int usia, String noKtp, String date, String jabatan, String jenisKelamin) {
         this.nama = nama;
         this.gaji = gaji;
