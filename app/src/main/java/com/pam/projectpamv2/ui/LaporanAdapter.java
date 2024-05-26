@@ -31,7 +31,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanV
         this.laporan.clear();
 //        this.gajian.addAll(listPegawai);
         for (Pegawai pegawai : listPegawai) {
-            if (pegawai.getStatusGaji()) {
+            if (pegawai.isStatusGaji()) {
                 Log.d("info", pegawai.nama);
                 this.laporan.add(pegawai);
             }

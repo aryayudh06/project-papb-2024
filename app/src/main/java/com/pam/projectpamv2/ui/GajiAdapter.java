@@ -43,7 +43,7 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
         this.gajian.clear();
 //        this.gajian.addAll(listPegawai);
         for (Pegawai pegawai : listPegawai) {
-            if (!pegawai.getStatusGaji()) {
+            if (!pegawai.isStatusGaji()) {
                 Log.d("info", pegawai.nama);
                 this.gajian.add(pegawai);
             }
@@ -66,7 +66,7 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
             @Override
             public void onClick(View v) {
                 if (!holder.binding.etInput.getText().toString().equals("")) {
-                    listener.onItemClicked(gajian.get(position), holder.binding.etInput.getText().toString(), 1);
+                    listener.onItemClicked(gajian.get(holder.getBindingAdapterPosition()), holder.binding.etInput.getText().toString(), 1);
                 }
             }
         });

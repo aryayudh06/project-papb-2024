@@ -49,7 +49,8 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         super.onCreate(savedInstanceState);
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
+        myRef = database.getReference("pegawai");
+        pegawais = new ArrayList<>();
 
         Pegawai a = new Pegawai();
         a.setNama("Doni");
@@ -58,7 +59,7 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
         a.setNoKtp("1234567889");
 //        pegawaiInsertUpdateViewModel.insert(a);
 
-        myRef.child("pegawai").setValue(a);
+//        myRef.child("pegawai").setValue(a);
 
         flSearch = findViewById(R.id.flSearch);
         Fragment search = new SearchBar();
@@ -135,7 +136,7 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     }
 
     public void updateData(Pegawai pegawaiOld, String input, boolean status, String date){
-        DatabaseReference notesRef = myRef.child("notes");
+        DatabaseReference notesRef = myRef;
         Query updateQuery = notesRef.orderByChild("title").equalTo(pegawaiOld.getNama());
 
         updateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -178,14 +179,15 @@ public class KelolaGaji extends AppCompatActivity implements ProsesListener, Que
     }
 
     public void readDataFromDatabase() {
-        DatabaseReference pegawaiRef = myRef.child("pegawai");
+        DatabaseReference pegawaiRef = myRef;
         pegawaiRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pegawais.clear();
                 for (DataSnapshot noteSnapshot : dataSnapshot.getChildren()) {
                     Pegawai pegawai = noteSnapshot.getValue(Pegawai.class);
                     pegawais.add(pegawai);
-                    Log.d("mNotes", pegawai.toString());
+                    Log.d("mNotes", pegawais.toString());
                 }
                 // Set up RecyclerView adapter here after data is fully loaded
                 setUpRecyclerView();
