@@ -32,7 +32,7 @@ import com.pam.projectpamv2.db.Pegawai;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KelolaGaji extends AppCompatActivity implements ProsesListener, QueryListener{
+    public class KelolaGaji extends AppCompatActivity implements ProsesListener, QueryListener{
 
     private ImageButton ibBack;
     private RecyclerView rvItemPeg;
