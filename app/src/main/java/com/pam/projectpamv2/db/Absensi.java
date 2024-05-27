@@ -20,10 +20,6 @@ public class Absensi {
     @ColumnInfo(name = "tanggal")
     public String tanggal = "";
 
-    // Required empty constructor
-    @Ignore
-    public Absensi() { }
-
     public Absensi(String nama, String alamat, String jamAbsensi, String tanggal) {
         this.nama = nama;
         this.alamat = alamat;
@@ -60,6 +56,14 @@ public class Absensi {
     }
 
     public void setJamAbsensi(){
-        
+        this.jamAbsensi = jamAbsensi;
+    }
+
+    public String getTanggal(){
+        return this.tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
     }
 }
