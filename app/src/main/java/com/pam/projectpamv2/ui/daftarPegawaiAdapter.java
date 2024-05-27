@@ -5,11 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +76,28 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
         holder.textViewJK.setText(pegawai.getJenisKelamin());
         holder.textViewJabatan.setText(pegawai.getJabatan());
         holder.textViewKTP.setText(pegawai.getNoKtp());
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pegawaiId = pegawai.getId();
+                dbRef.child(String.valueOf(pegawaiId)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            pegawaiList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, pegawaiList.size());
+                            Toast.makeText(holder.itemView.getContext(),
+                                    "Pegawai data deleted successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(holder.itemView.getContext(),
+                                    "Failed to delete item", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -82,6 +108,7 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
     public class PegawaiViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewNama, textViewJK, textViewJabatan, textViewKTP;
+        ImageView btnDelete;
 
         public PegawaiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +116,7 @@ public class daftarPegawaiAdapter extends RecyclerView.Adapter<daftarPegawaiAdap
             textViewJK = itemView.findViewById(R.id.textViewJK);
             textViewJabatan = itemView.findViewById(R.id.textViewJabatan);
             textViewKTP = itemView.findViewById(R.id.textViewKTP);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
 
         public void bind(Pegawai pegawai) {

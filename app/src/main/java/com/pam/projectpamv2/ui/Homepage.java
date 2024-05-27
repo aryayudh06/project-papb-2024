@@ -46,6 +46,9 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
         } else if (v.getId()==R.id.btnLapBulanan) {
             Intent i = new Intent(this, LaporanBulanan.class);
             startActivity(i);
+        } else if (v.getId()==R.id.btnDataAbsensi) {
+            Intent i = new Intent(this, DataAbsensi.class);
+            startActivity(i);
         }
     }
 
