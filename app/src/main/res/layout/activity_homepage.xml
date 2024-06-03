@@ -25,8 +25,8 @@
         app:layout_constraintVertical_bias="0.063" />
 
     <LinearLayout
-        android:layout_width="151dp"
-        android:layout_height="379dp"
+        android:layout_width="153dp"
+        android:layout_height="463dp"
         android:layout_marginTop="56dp"
         android:background="@drawable/title_card"
         android:orientation="vertical"
@@ -34,6 +34,15 @@
         app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSimpegHome">
+
+        <Button
+            android:id="@+id/btnPegawai"
+            android:layout_width="126dp"
+            android:layout_height="75dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/done_btn"
+            android:text="Data Pegawai" />
 
         <Button
             android:id="@+id/btnDataPegawai"

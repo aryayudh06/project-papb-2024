@@ -1,5 +1,6 @@
 package com.pam.projectpamv2.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbsensiAdapter extends RecyclerView.Adapter<AbsensiAdapter.AbsensiViewHolder> {
-    private List<Absensi> absensiList = new ArrayList<>();
+    private List<Absensi> absensiList;
+    private final Context context;
+
+    public AbsensiAdapter(Context context, List<Absensi> absensiList){
+        this.absensiList = absensiList;
+        this.context = context;
+    }
 
     @NonNull
     @Override
