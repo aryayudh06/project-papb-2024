@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pam.projectpamv2.components.PegawaiDiffCallback;
+import com.pam.projectpamv2.databinding.ActivityLaporanBulananBinding;
 import com.pam.projectpamv2.databinding.RowKelolaGajiBinding;
 import com.pam.projectpamv2.databinding.RowLaporanBulananBinding;
 import com.pam.projectpamv2.db.Pegawai;
@@ -24,6 +25,12 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanV
     List<Pegawai> laporan = new ArrayList<>();
     ProsesListener listener;
 
+    public LaporanAdapter(Context context, List<Pegawai> laporan, ProsesListener prosesListener){
+        this.context = context;
+        this.listener = prosesListener;
+        setListPegawai(laporan);
+    }
+
     void setListPegawai(List<Pegawai> listPegawai) {
         final PegawaiDiffCallback diffCallback = new PegawaiDiffCallback(this.laporan, listPegawai);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -31,13 +38,27 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.LaporanV
         this.laporan.clear();
 //        this.gajian.addAll(listPegawai);
         for (Pegawai pegawai : listPegawai) {
-            if (pegawai.getStatusGaji()) {
+            if (pegawai.isStatusGaji()) {
                 Log.d("info", pegawai.nama);
                 this.laporan.add(pegawai);
             }
         }
         diffResult.dispatchUpdatesTo(this);
+        if (laporan!= null) {
+            getTotal();
+        }
+    }
 
+
+    public void getTotal(){
+        int x = 0;
+        int y = 0;
+        for (Pegawai p : laporan){
+            y = Integer.parseInt(p.getGaji());
+            x += y;
+        }
+
+        listener.onTotalChanged(x);
     }
 
     @NonNull

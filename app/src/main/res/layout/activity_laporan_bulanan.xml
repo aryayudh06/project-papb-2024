@@ -104,18 +104,21 @@
                 android:textStyle="bold" />
         </TableRow>
 
-        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvLaporanBulanan">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLaporanBulanan"
+            android:layout_width="391dp"
+            android:layout_height="224dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="402dp"
+            android:layout_height="52dp">
 
             <TextView
                 android:id="@+id/tvTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="94dp"
+                android:layout_height="22dp"
                 android:layout_column="2"
                 android:text="Total"
                 android:textStyle="bold" />
@@ -124,8 +127,11 @@
                 android:id="@+id/tvTotal1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_column="5"
-                android:textAlignment="center" />
+                android:layout_column="3"
+                android:layout_span="3"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </TableRow>
     </TableLayout>
 

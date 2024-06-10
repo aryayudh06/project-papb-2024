@@ -18,6 +18,7 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
 
     private Button btnDataPegawai;
     private Button btnLapBulanan;
+    private Button btnDataAbsensi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +29,17 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
 
         this.btnLapBulanan = this.findViewById(R.id.btnLapBulanan);
 
+        this.btnDataAbsensi = this.findViewById(R.id.btnDataAbsensi);
+
+        this.btnDataAbsensi.setOnClickListener(this);
+
         this.btnLapBulanan.setOnClickListener(this);
 
         this.btnDataPegawai.setOnClickListener(this);
 
 //
 //        Pegawai a = new Pegawai("Adel", "7000000", false, 23, "12323233", DateComponent.getCurrentDate());
-////        p.insert(a);
+//        p.insert(a);
 
     }
 
@@ -45,6 +50,9 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
             startActivity(i);
         } else if (v.getId()==R.id.btnLapBulanan) {
             Intent i = new Intent(this, LaporanBulanan.class);
+            startActivity(i);
+        } else if (v.getId()==R.id.btnDataAbsensi) {
+            Intent i = new Intent(this, DataAbsensi.class);
             startActivity(i);
         }
     }

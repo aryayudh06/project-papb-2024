@@ -33,7 +33,7 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
 
     public GajiAdapter(Context context, List<Pegawai> gajian, ProsesListener listener) {
         this.context = context;
-        this.gajian = gajian;
+        setListPegawai(gajian);
         this.listener = listener;
     }
     void setListPegawai(List<Pegawai> listPegawai) {
@@ -41,11 +41,11 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
         this.gajian.clear();
-//        this.gajian.addAll(listPegawai);
         for (Pegawai pegawai : listPegawai) {
-            if (!pegawai.getStatusGaji()) {
-                Log.d("info", pegawai.nama);
+            if (!pegawai.isStatusGaji()) {
+//                Log.d("info", pegawai.isStatusGaji());
                 this.gajian.add(pegawai);
+                Log.d("info", pegawai.toString());
             }
         }
         diffResult.dispatchUpdatesTo(this);
@@ -66,7 +66,7 @@ public class GajiAdapter extends RecyclerView.Adapter<GajiAdapter.GajiViewHolder
             @Override
             public void onClick(View v) {
                 if (!holder.binding.etInput.getText().toString().equals("")) {
-                    listener.onItemClicked(gajian.get(position), holder.binding.etInput.getText().toString(), 1);
+                    listener.onItemClicked(gajian.get(holder.getBindingAdapterPosition()), holder.binding.etInput.getText().toString(), 1);
                 }
             }
         });

@@ -50,10 +50,17 @@
 
         <ImageView
             android:id="@+id/edit"
-            android:layout_width="99dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/page_edit" />
+
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/btn_delete" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
