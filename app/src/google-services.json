@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "426905210368",
+    "firebase_url": "https://projectpapb-93315-default-rtdb.firebaseio.com",
+    "project_id": "projectpapb-93315",
+    "storage_bucket": "projectpapb-93315.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426905210368:android:df860dcc9aec1e8c2c52e5",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRdiFe5NScrCI9VqVDLPWvC2YOM8j1es4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426905210368:android:1a5eeff6001888312c52e5",
+        "android_client_info": {
+          "package_name": "com.pam.projectpamv2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRdiFe5NScrCI9VqVDLPWvC2YOM8j1es4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

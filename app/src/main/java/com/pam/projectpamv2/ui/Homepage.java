@@ -18,6 +18,7 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
 
     private Button btnDataPegawai;
     private Button btnLapBulanan;
+    private Button btnDataAbsensi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,10 @@ public class Homepage extends AppCompatActivity implements View.OnClickListener 
         this.btnDataPegawai = this.findViewById(R.id.btnDataPegawai);
 
         this.btnLapBulanan = this.findViewById(R.id.btnLapBulanan);
+
+        this.btnDataAbsensi = this.findViewById(R.id.btnDataAbsensi);
+
+        this.btnDataAbsensi.setOnClickListener(this);
 
         this.btnLapBulanan.setOnClickListener(this);
 

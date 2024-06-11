@@ -20,6 +20,10 @@ public class Absensi {
     @ColumnInfo(name = "tanggal")
     public String tanggal = "";
 
+    public Absensi(){
+
+    }
+    
     public Absensi(String nama, String alamat, String jamAbsensi, String tanggal) {
         this.nama = nama;
         this.alamat = alamat;

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,8 @@ public class DataAbsensi extends AppCompatActivity {
     private RecyclerView recyclerView;
     FirebaseDatabase db;
     DatabaseReference dbRef;
+    private List<Absensi> absensiList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +37,31 @@ public class DataAbsensi extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference("absensi");
+
         recyclerView = findViewById(R.id.rvAbsensi);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        absensiAdapter = new AbsensiAdapter();
+
+        readData();
+
+        absensiAdapter = new AbsensiAdapter(this, this.absensiList);
         recyclerView.setAdapter(absensiAdapter);
+    }
 
-        this.dbRef.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        List<Absensi> absensiList = new ArrayList<>();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Absensi absensi = dataSnapshot.getValue(Absensi.class);
-                            absensiList.add(absensi);
-                        }
-                        absensiAdapter.setAbsensiList(absensiList);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
+    private void readData() {
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Absensi absensi = dataSnapshot.getValue(Absensi.class);
+                    absensiList.add(absensi);
+                    Log.d("Info", absensiList.toString());
                 }
-        );
+                absensiAdapter.setAbsensiList(absensiList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }
