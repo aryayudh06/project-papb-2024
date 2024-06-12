@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -46,6 +48,16 @@ public class dataPegawai extends AppCompatActivity {
         loadDataFromFirebase();
 
         Button button = findViewById(R.id.button);
+        ImageView imageViewback = findViewById(R.id.imageView6);
+
+        imageViewback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(dataPegawai.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

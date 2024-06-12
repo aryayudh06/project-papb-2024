@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".ui.KelolaGaji" />
         <activity android:name=".ui.LaporanBulanan" />
+        <activity android:name=".ui.dataPegawai" />
     </application>
 
 </manifest>
